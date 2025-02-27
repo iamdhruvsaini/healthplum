@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .center{
+        @apply flex justify-center items-center;
+    }
+    .middle{
+        @apply flex items-center
+    }
+    .col-center{
+        @apply flex  flex-col;
+    }
+    .navlogo-div{
+        @apply middle gap-2;
+    }
+    .nav-div{
+        @apply middle justify-between py-4;
+    }
+    .btn{
+        @apply font-normal text-white bg-iconblue border-none outline-none rounded-md text-sm p-2 hover:scale-x-105 duration-150 text-center ;
+     
+    }
+    .poster-text{
+        @apply text-white font-semibold leading-tight;
+    }
+    .gray-btn{
+        @apply text-gray-700 border-2 rounded-md px-2 py-1 outline-none hover:text-iconblue hover:border-iconblue duration-300;
+    }
+}
+
+.hides{
+    display: none;
+}
+@media (max-width:450px) {
+    .hides{
+        display: block;
+    }
+    .logobuttons{
+        display: none;
+    }
+}
+@media(max-width:640px){
+    .formfilter{
+        bottom:-10px;
+    }
+}
+
+@media(max-width:520px){
+    .doctor{
+        width:100px;
+        font-size: smaller;
+    }
+    .location{
+        width:100px;
+        font-size: smaller;
+    }
+    .search{
+        font-size: smaller;
+    }
+}
+.lefticons{
+    overflow-y:scroll;
+}
+.lefticons::-webkit-scrollbar{
+    display: none;
+}
+
+
+
+
+.content{
+    overflow-y: scroll;
+}
+.content::-webkit-scrollbar{
+    display: none;
+}
+
+@media (min-width:640px) {
+    a.active{
+        background-color: #3B9AB8;
+        color:white;
+    }
+    a.active >.icon{
+        color:white;
+    }
+
+}
+
+.profile-pic{
+    background-image: url('../src//assets/images/biker.jpg');
+    background-position: center center;
+    background-size: contain;
+}
+
+
+/*======================
+    404 page
+=======================*/
+
+.page_404 {
+    padding: 40px 0;
+    background: #fff;
+    font-family: 'inter';
+  }
+  
+  .page_404 img {
+    width: 100%;
+  }
+  
+  .four_zero_four_bg {
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .four_zero_four_bg h1 {
+    font-size: 80px;
+  }
+  
+  .four_zero_four_bg h3 {
+    font-size: 80px;
+  }
+  
+  .link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: rgb(7, 189, 98);
+    margin: 20px 0;
+    display: inline-block;
+    cursor:pointer;
+    border-radius: 12px;
+  }
+
+  .contant_box_404 {
+    margin-top: -40px;
+  }
