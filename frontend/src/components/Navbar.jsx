@@ -195,7 +195,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    to="/signup"
+                    to="/register"
                     className="px-4 py-2 text-sm font-medium bg-primary-600 rounded-md hover:bg-primary-700 transition-all border"
                   >
                     Sign Up
@@ -317,7 +317,7 @@ const Navbar = () => {
                       Login
                     </Link>
                     <Link
-                      to="/signup"
+                      to="/register"
                       onClick={() => setIsMenuOpen(false)}
                       className="block text-center text-sm px-3 py-2 rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-all"
                     >
