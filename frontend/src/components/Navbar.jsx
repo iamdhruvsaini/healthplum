@@ -52,7 +52,7 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="sticky top-0 z-50 transition-all duration-300 bg-white"
+      className="xl:w-[1300px] px-4 mx-auto sticky top-0 z-50 transition-all duration-300 bg-white"
     >
       <div className="mx-auto">
         <div className="flex justify-between h-16 items-center">
