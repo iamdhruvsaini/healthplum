@@ -4,11 +4,13 @@ import { User, UserCog, Users, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from 'react-router-dom';
+import Processing from "../../components/Processing";
 
 
 const Login = () => {
   const [userType, setUserType] = useState("patient");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading,setIsLoading]=useState(false);
   const { loginUser } = useAuth();
   const navigate = useNavigate();
   const {
@@ -19,6 +21,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     try {
       const response = await loginUser(data);
       
@@ -53,13 +56,18 @@ const Login = () => {
           popup: "small-toast",
         },
       });
+    }finally{
+      setIsLoading(false);
     }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+   
+  if(isLoading){
+    return <Processing/>
+  }
   return (
     <div className="min-h-screen flex flex-col justify-center items-center mt-4">
       <div className=" bg-white rounded-xl shadow-lg overflow-hidden">

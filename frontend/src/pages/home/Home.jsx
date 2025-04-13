@@ -71,7 +71,7 @@ const Home = () => {
                   <div className="group transition-all duration-300">
                     <div className="border border-gray-200 hover:border-gray-400 hover:shadow-md bg-white rounded-lg flex flex-col items-center p-4 gap-3 transition-all duration-300">
                       <div className="flex gap-4 py-3 items-center w-full border-b border-gray-100">
-                        <div className="w-20 h-20 rounded-full bg-gray-100 overflow-hidden shadow-sm flex-shrink-0">
+                        <Link to={`/doctor/${doctor.doctor_id}`} className="w-20 h-20 rounded-full bg-gray-100 overflow-hidden shadow-sm flex-shrink-0">
                           {doctor.face_url ? (
                             <img
                               src={doctor.face_url}
@@ -83,11 +83,11 @@ const Home = () => {
                               {doctor.name.charAt(0)}
                             </div>
                           )}
-                        </div>
+                        </Link>
                         <div className="flex flex-col gap-1">
-                          <h1 className="text-lg font-semibold text-gray-800">
+                          <Link to={`/doctor/${doctor.doctor_id}`} className="text-lg font-semibold text-gray-800 hover:underline">
                             {doctor.name}
-                          </h1>
+                          </Link>
                           <div className="flex gap-2 text-xs">
                             <div className="border-r border-gray-300 pr-2">
                               <p className="text-gray-600">specialist</p>

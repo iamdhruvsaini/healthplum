@@ -16,6 +16,7 @@ import { DoctorProfile } from '../pages/profile/DocotorProfile';
 
 
 
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -69,7 +70,8 @@ const router = createBrowserRouter([
       {
         path:'doctor-profile',
         element:<DoctorProfile/>
-      }
+      },
+      
     ]
   }
 ]);
