@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLoginUserMutation, useRegisterUserMutation } from "../redux/api/authenticationAPI";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
@@ -37,13 +38,15 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // Optional: Decode token or hit `/me` endpoint
-      // For now, just set loading to false
-      // You can implement token decoding with jwt-decode if needed
-      setLoading(false);
-    } else {
-      setLoading(false);
+      try {
+        const decoded = jwtDecode(token);
+        setCurrentUser(decoded); // assuming token has user info
+      } catch (error) {
+        console.error("Invalid token");
+        localStorage.removeItem("token");
+      }
     }
+    setLoading(false);
   }, []);
 
   const value = {
@@ -54,5 +57,10 @@ export const AuthProvider = ({ children }) => {
     logout,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  console.log(currentUser);
+  if(!loading){
+    return <AuthContext.Provider value={value}>
+        {children}
+      </AuthContext.Provider>;
+  }
 };

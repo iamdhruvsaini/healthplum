@@ -15,9 +15,11 @@ import {
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { useAuth } from "../../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [userType, setUserType] = useState("patient");
+  const navigate= useNavigate();
   const {
     register,
     handleSubmit,
@@ -85,6 +87,8 @@ const SignUpPage = () => {
           },
         });
         reset(); // Reset the form after successful registration
+        navigate("/login"); // Redirect to login page after successful registration
+
       })
       .catch((error) => {
         Swal.fire({
@@ -102,7 +106,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center mt-2">
+    <div className="min-h-screen flex flex-col justify-center items-center mt-2 p-8">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* Left side - Image and tagline */}
@@ -250,9 +254,9 @@ const SignUpPage = () => {
 
             <div className="mt-4 text-center text-gray-600">
               Already have an account?{" "}
-              <a href="#" className="text-blue-600 hover:underline">
+              <Link to={'/login'} className="text-blue-600 hover:underline">
                 Sign in
-              </a>
+              </Link>
             </div>
           </div>
         </div>

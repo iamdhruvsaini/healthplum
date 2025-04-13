@@ -34,20 +34,7 @@ const Navbar = () => {
 
   ];
 
-  const userLinks = currentUser
-    ? [
-        {
-          name: 'Dashboard',
-          href: currentUser.role === 'doctor' ? '/doctor' : '/patient',
-        },
-        {
-          name: 'Profile',
-          href: currentUser.role === 'doctor' ? '/doctor/profile' : '/patient/profile',
-        },
-      ]
-    : [];
-
-  const navLinks = [...publicLinks, ...userLinks.slice(0, 1)];
+  const navLinks = [...publicLinks];
   const isActive = (path) => location.pathname === path;
 
   return (

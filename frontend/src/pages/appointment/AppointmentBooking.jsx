@@ -3,22 +3,21 @@ import { useForm } from 'react-hook-form';
 import { Calendar, Clock, CheckCircle, AlertCircle, ArrowLeft, ArrowRight, Star, DollarSign, ClockFading } from 'lucide-react';
 import { useFetchDoctorsByIdQuery } from '../../redux/api/doctorsAPI';
 import { useParams } from 'react-router-dom';
+import m_doctor from "../../assets/images/m_doctor.jpg";  
 
 export default function AppointmentBooking() {
   const [currentStep, setCurrentStep] = useState(1);
   const { doctorId } = useParams(); 
-  const {data:doctor,isLoading}=useFetchDoctorsByIdQuery(doctorId);  // Watch form values
- 
-  console.log(doctor);
+  const { data: doctor, isLoading } = useFetchDoctorsByIdQuery(doctorId);
   
   // Use React Hook Form
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
       selectedDate: '',
       selectedTime: '',
       appointmentType: '',
       appointmentReason: '',
-      isInsurance: true,
+      isInsurance: 'true', // String value for radio buttons to work correctly
       insuranceProvider: '',
       insuranceId: '',
       patientName: '',
@@ -27,7 +26,7 @@ export default function AppointmentBooking() {
     }
   });
   
-  // Doctor data from the prompt
+  // Watch form values
   const formValues = watch();
   
   // Generate dates for the next 10 days
@@ -80,22 +79,34 @@ export default function AppointmentBooking() {
   
   const onSubmit = (data) => {
     console.log('Appointment form submitted with data:', data);
+    // Convert string 'true'/'false' to boolean for final data
+    data.isInsurance = data.isInsurance === 'true';
     // Move to confirmation step
     setCurrentStep(4);
   };
 
-  if(isLoading || doctor===undefined){
+  // Handle insurance radio change
+  const handleInsuranceChange = (value) => {
+    setValue("isInsurance", value);
+    // If changing to self-pay, clear insurance fields
+    if (value === 'false') {
+      setValue("insuranceProvider", '');
+      setValue("insuranceId", '');
+    }
+  };
+
+  if (isLoading || doctor === undefined) {
     return <div className="flex items-center justify-center h-screen"><ClockFading className="h-10 w-10 animate-spin text-blue-600" /></div>;
   }
   
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden mt-4">
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden mt-4 px-8 mx-auto">
       {/* Header with doctor info */}
-      <div className="bg-gray-50 p-6 border-b border-gray-200">
+      <div className="bg-gray-50 p-4 md:p-6 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row sm:items-center">
           <div className="flex items-center mb-4 sm:mb-0">
             <img 
-              src={doctor.face_url} 
+              src={m_doctor} 
               alt={doctor.name} 
               className="w-16 h-16 rounded-full object-contain border-2 border-white shadow-md"
             />
@@ -129,37 +140,40 @@ export default function AppointmentBooking() {
       </div>
       
       {/* Progress steps */}
-      <div className="px-6 pt-6">
-        <div className="flex flex-wrap items-center justify-between mb-8">
-          {[1, 2, 3, 4].map((step) => (
-            <div key={step} className="flex items-center mb-2 sm:mb-0">
-              <div 
-                className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium
-                  ${currentStep === step 
-                    ? 'bg-blue-600 text-white' 
-                    : currentStep > step 
-                      ? 'bg-blue-100 text-blue-600' 
-                      : 'bg-gray-100 text-gray-500'
-                  }`}
-              >
-                {currentStep > step ? <CheckCircle className="h-5 w-5" /> : step}
+      <div className="px-4 md:px-6 pt-6">
+        <div className="flex justify-between mb-8">
+          <div className="w-full max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            {[1, 2, 3, 4].map((step) => (
+              <div key={step} className="flex items-center mb-2 sm:mb-0 relative">
+                <div 
+                  className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium
+                    ${currentStep === step 
+                      ? 'bg-blue-600 text-white' 
+                      : currentStep > step 
+                        ? 'bg-blue-100 text-blue-600' 
+                        : 'bg-gray-100 text-gray-500'
+                    }`}
+                >
+                  {currentStep > step ? <CheckCircle className="h-5 w-5" /> : step}
+                </div>
+                <p className={`ml-2 text-xs sm:text-sm ${currentStep >= step ? 'text-gray-800 font-medium' : 'text-gray-500'}`}>
+                  {step === 1 ? 'Date & Time' : 
+                   step === 2 ? 'Appointment Details' : 
+                   step === 3 ? 'Personal Info' : 'Confirmation'}
+                </p>
+                
+                {step < 4 && (
+                  <div className="hidden sm:block absolute h-0.5 bg-gray-200 w-8 sm:w-12 left-full ml-1">
+                  </div>
+                )}
               </div>
-              <p className={`ml-2 text-xs sm:text-sm ${currentStep >= step ? 'text-gray-800 font-medium' : 'text-gray-500'}`}>
-                {step === 1 ? 'Date & Time' : 
-                 step === 2 ? 'Appointment Details' : 
-                 step === 3 ? 'Personal Info' : 'Confirmation'}
-              </p>
-              
-              {step < 4 && (
-                <div className="mx-2 h-px w-4 sm:w-8 bg-gray-200 hidden sm:block"></div>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           {/* Step 1: Date and Time Selection */}
           {currentStep === 1 && (
             <div>
@@ -169,7 +183,7 @@ export default function AppointmentBooking() {
                   Select Date
                 </h3>
                 
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                   {generateDates().map((date, index) => (
                     <label
                       key={index}
@@ -201,7 +215,7 @@ export default function AppointmentBooking() {
                   Select Time
                 </h3>
                 
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                   {timeSlots.map((time, index) => (
                     <label
                       key={index}
@@ -270,44 +284,36 @@ export default function AppointmentBooking() {
               
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Insurance Information</h3>
-                <div className="flex flex-wrap items-center space-x-4 mb-4">
+                <div className="flex flex-wrap items-center gap-4 mb-4">
                   <label
                     className={`py-3 px-6 rounded-lg border-2 transition-all cursor-pointer
-                      ${formValues.isInsurance === true ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-200 text-gray-800'}`}
+                      ${formValues.isInsurance === 'true' ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-200 text-gray-800'}`}
                   >
                     <input
                       type="radio"
                       value="true"
                       className="sr-only"
                       {...register("isInsurance", { required: true })}
-                      onChange={() => {
-                        // This is necessary because react-hook-form doesn't automatically convert string "true" to boolean
-                        const { setValue } = { setValue: (name, value) => document.getElementsByName(name)[0].value = value };
-                        setValue("isInsurance", true);
-                      }}
+                      onChange={() => handleInsuranceChange('true')}
                     />
                     Yes, I have insurance
                   </label>
                   <label
                     className={`py-3 px-6 rounded-lg border-2 transition-all cursor-pointer
-                      ${formValues.isInsurance === false ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-200 text-gray-800'}`}
+                      ${formValues.isInsurance === 'false' ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-200 text-gray-800'}`}
                   >
                     <input
                       type="radio"
                       value="false"
                       className="sr-only"
                       {...register("isInsurance", { required: true })}
-                      onChange={() => {
-                        // This is necessary because react-hook-form doesn't automatically convert string "false" to boolean
-                        const { setValue } = { setValue: (name, value) => document.getElementsByName(name)[0].value = value };
-                        setValue("isInsurance", false);
-                      }}
+                      onChange={() => handleInsuranceChange('false')}
                     />
                     Self-pay
                   </label>
                 </div>
                 
-                {formValues.isInsurance === true && (
+                {formValues.isInsurance === 'true' && (
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
@@ -317,7 +323,7 @@ export default function AppointmentBooking() {
                           className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.insuranceProvider ? 'border-red-500' : 'border-gray-300'}`}
                           placeholder="e.g. Blue Cross"
                           {...register("insuranceProvider", { 
-                            required: formValues.isInsurance ? "Insurance provider is required" : false
+                            required: formValues.isInsurance === 'true' ? "Insurance provider is required" : false
                           })}
                         />
                         {errors.insuranceProvider && <p className="text-red-500 text-sm mt-1">{errors.insuranceProvider.message}</p>}
@@ -330,7 +336,7 @@ export default function AppointmentBooking() {
                           className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.insuranceId ? 'border-red-500' : 'border-gray-300'}`}
                           placeholder="e.g. ABC123456789"
                           {...register("insuranceId", { 
-                            required: formValues.isInsurance ? "Insurance ID is required" : false
+                            required: formValues.isInsurance === 'true' ? "Insurance ID is required" : false
                           })}
                         />
                         {errors.insuranceId && <p className="text-red-500 text-sm mt-1">{errors.insuranceId.message}</p>}
@@ -426,9 +432,9 @@ export default function AppointmentBooking() {
               <div className="bg-gray-50 rounded-lg p-6 max-w-md mx-auto text-left">
                 <div className="flex items-center mb-6">
                   <img 
-                    src={doctor.image} 
+                    src={m_doctor} 
                     alt={doctor.name} 
-                    className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-sm"
+                    className="w-14 h-14 rounded-full object-contain border-2 border-white shadow-sm"
                     onError={(e) => {
                       e.target.src = "/api/placeholder/100/100";
                       e.target.alt = "Doctor profile";
@@ -484,7 +490,7 @@ export default function AppointmentBooking() {
                       <p className="text-sm text-gray-500">Consultation Fee</p>
                       <p className="font-medium text-gray-800">${doctor.consultation_fee}</p>
                     </div>
-                    {formValues.isInsurance === true && (
+                    {formValues.isInsurance === 'true' && (
                       <p className="text-xs text-green-600 mt-1">* May be covered by your insurance</p>
                     )}
                   </div>
@@ -496,7 +502,7 @@ export default function AppointmentBooking() {
         
         {/* Footer with navigation buttons */}
         {currentStep !== 4 && (
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
+          <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
             {currentStep > 1 ? (
               <button 
                 type="button"

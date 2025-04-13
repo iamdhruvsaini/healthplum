@@ -3,6 +3,9 @@ import { Search, MapPin, Filter, Heart, Calendar, Star, ChevronDown, ChevronLeft
 import { useFetchDoctorsQuery } from '../../redux/api/doctorsAPI';
 import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader';
+import m_doctor from "../../assets/images/m_doctor.jpg";  
+
+
 export default function DoctorFinder() {
   const [specialty, setSpecialty] = useState('');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -113,18 +116,7 @@ export default function DoctorFinder() {
             
             {showMobileFilters && (
               <div className="mt-3 grid grid-cols-1 gap-3">
-                <button className="flex items-center px-4 py-2 bg-white rounded-lg shadow-sm text-black hover:bg-gray-100 transition-colors">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filters
-                </button>
-                <button className="flex items-center px-4 py-2 bg-white rounded-lg shadow-sm text-black hover:bg-gray-100 transition-colors">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Availability
-                </button>
-                <button className="flex items-center px-4 py-2 bg-white rounded-lg shadow-sm text-black hover:bg-gray-100 transition-colors">
-                  <Star className="h-4 w-4 mr-2" />
-                  Rating
-                </button>
+               
                 <div className="relative">
                   <select className="appearance-none w-full bg-white border border-gray-200 rounded-lg py-2 pl-4 pr-10 focus:ring-blue-500 focus:border-blue-500">
                     <option>Sort by: Recommended</option>
@@ -142,20 +134,7 @@ export default function DoctorFinder() {
           
           {/* Desktop view */}
           <div className="hidden sm:flex flex-wrap justify-between items-center">
-            <div className="flex flex-wrap gap-3 mb-3 sm:mb-0">
-              <button className="flex items-center px-4 py-2 bg-white rounded-lg shadow-sm text-black hover:bg-gray-100 transition-colors">
-                <Filter className="h-4 w-4 mr-2" />
-                Filters
-              </button>
-              <button className="flex items-center px-4 py-2 bg-white rounded-lg shadow-sm text-black hover:bg-gray-100 transition-colors">
-                <Calendar className="h-4 w-4 mr-2" />
-                Availability
-              </button>
-              <button className="flex items-center px-4 py-2 bg-white rounded-lg shadow-sm text-black hover:bg-gray-100 transition-colors">
-                <Star className="h-4 w-4 mr-2" />
-                Rating
-              </button>
-            </div>
+            
             
             <div className="relative w-full sm:w-auto">
               <select className="appearance-none w-full bg-white border border-gray-200 rounded-lg py-2 pl-4 pr-10 focus:ring-blue-500 focus:border-blue-500">
@@ -178,7 +157,7 @@ export default function DoctorFinder() {
               <div className="flex flex-col md:flex-row">
                 <div className="p-4 sm:p-6 flex justify-center items-center md:w-1/4">
                   <div className="relative">
-                    <Link to={`/doctor/${doctor.user_id}`}><img src={doctor.face_url} alt={doctor.name} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full object-contain border-4 border-gray-100" /></Link>
+                    <Link to={`/doctor/${doctor.user_id}`}><img src={m_doctor} alt={doctor.name} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full object-contain border-4 border-gray-100" /></Link>
                     <button className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-md transition-transform group-hover:scale-110">
                       <Heart className="h-4 w-4 text-gray-500 hover:text-blue-500" />
                     </button>

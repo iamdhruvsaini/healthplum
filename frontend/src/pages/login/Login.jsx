@@ -3,47 +3,57 @@ import { useForm } from "react-hook-form";
 import { User, UserCog, Users, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import Swal from "sweetalert2";
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
   const [userType, setUserType] = useState("patient");
   const [showPassword, setShowPassword] = useState(false);
   const { loginUser } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Login attempt:", { ...data, userType });
-    loginUser(data)
-      .then((response) => {
-        Swal.fire({
-          toast: true,
-          position: "bottom-end",
-          icon: "success",
-          title: "Login successful!",
-          showConfirmButton: false,
-          timer: 1500,
-          customClass: {
-            popup: "small-toast",
-          },
-        });
-        reset();
-      })
-      .catch((error) => {
-        Swal.fire({
-          toast: true,
-          position: "top",
-          icon: "error",
-          title: "Login failed!",
-          showConfirmButton: false,
-          timer: 1500,
-          customClass: {
-            popup: "small-toast",
-          },
-        });
+  const onSubmit = async (data) => {
+    try {
+      const response = await loginUser(data);
+      
+      if (response?.error) {
+        throw new Error("Login failed");
+      }
+  
+      Swal.fire({
+        toast: true,
+        position: "bottom-end",
+        icon: "success",
+        title: "Login successful!",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          popup: "small-toast",
+        },
       });
+      
+      reset();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        toast: true,
+        position: "top",
+        icon: "error",
+        title: "Login failed!",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          popup: "small-toast",
+        },
+      });
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -227,9 +237,9 @@ const Login = () => {
 
             <div className="mt-6 text-center text-gray-600">
               Don't have an account?{" "}
-              <a href="#" className="text-blue-600 hover:underline">
+              <Link to={'/register'} className="text-blue-600 hover:underline">
                 Create one
-              </a>
+              </Link>
             </div>
 
             {userType === "patient" && (

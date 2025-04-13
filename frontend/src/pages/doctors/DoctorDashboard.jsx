@@ -2,6 +2,8 @@ import { Star, User, Mail, DollarSign, Award, Briefcase, TrendingUp, Calendar, C
 import { useFetchDoctorsByIdQuery } from '../../redux/api/doctorsAPI';
 import { useParams } from 'react-router-dom';
 import Loader from '../../components/Loader';
+import m_doctor from "../../assets/images/m_doctor.jpg";  
+
 
 export default function DoctorDashboard() {
   // Doctor data
@@ -37,11 +39,11 @@ export default function DoctorDashboard() {
             <div className="bg-gray-50 rounded-xl p-6 flex flex-col items-center">
               <div className="relative mb-4">
                 <img 
-                  src={doctorData.face_url} 
+                  src={m_doctor} 
                   alt={doctorData.name}
-                  className="w-48 h-48 rounded-full object-cover shadow-md border-4 border-white"
+                  className="w-48 h-48 rounded-full object-contain shadow-md border-4 bg-white border-white"
                   onError={(e) => {
-                    e.target.src = "/api/placeholder/200/200";
+                    e.target.src = {m_doctor};
                     e.target.alt = "Profile image placeholder";
                   }}
                 />
