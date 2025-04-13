@@ -7,7 +7,7 @@ export const HealthPlumSchema =async ()=>{
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL,
         password TEXT NOT NULL,
-        role VARCHAR(20) CHECK (role IN ('doctor', 'patient')) NOT NULL,
+        role VARCHAR(20) CHECK (role IN ('doctor', 'patient','staff')) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`
 
@@ -33,7 +33,18 @@ export const HealthPlumSchema =async ()=>{
         address TEXT
     );
     `
-
+    await sql`
+    CREATE TABLE IF NOT EXISTS staff (
+      user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+      gender VARCHAR(10) CHECK (gender IN ('male', 'female', 'other')),
+      age INT CHECK (age > 0),
+      phone_number VARCHAR(15),
+      address TEXT,
+      department VARCHAR(100) NOT NULL,
+      position VARCHAR(100) NOT NULL,
+      employee_id VARCHAR(50) UNIQUE NOT NULL
+    );
+  `
     await sql `
     CREATE TABLE IF NOT EXISTS appointments (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -46,5 +57,18 @@ export const HealthPlumSchema =async ()=>{
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     `
+
+    await sql`
+    CREATE TABLE IF NOT EXISTS ambulance_bookings (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      staff_id UUID REFERENCES staff(user_id) ON DELETE SET NULL,
+      patient_id UUID REFERENCES patients(user_id) ON DELETE SET NULL,
+      booking_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      pickup_address TEXT NOT NULL,
+      dropoff_address TEXT NOT NULL,
+      status VARCHAR(20) DEFAULT 'pending'
+        CHECK (status IN ('pending', 'en_route', 'completed', 'cancelled'))
+    );
+  `;
 
 }

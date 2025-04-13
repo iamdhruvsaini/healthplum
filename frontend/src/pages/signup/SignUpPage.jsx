@@ -1,19 +1,53 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { User, UserCog, Users, Mail, Lock, Phone, MapPin, Calendar,  Award, DollarSign, CheckCircle } from "lucide-react";
+import { User, UserCog, Users, Mail, Lock, Phone, MapPin, Calendar, Award, DollarSign, CheckCircle } from "lucide-react";
+import { useRegisterUserMutation } from "../../redux/api/authenticationAPI";
+import Swal from 'sweetalert2'
 
 const SignUpPage = () => {
   const [userType, setUserType] = useState("patient");
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [registerUser] = useRegisterUserMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission here
+    // Add the role field based on the selected userType
+    const userData = {
+      ...data,
+      role: userType // Include the role field
+    };
+    
+    // Call the registerUser mutation with the userData
+    registerUser(userData).then((response) => {
+      Swal.fire({
+        toast: true,
+        position: "bottom-end",
+        icon: "success",
+        title: "Registration successful!",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          popup: "small-toast",
+        }
+      });
+    }).catch((error) => {
+      Swal.fire({
+        toast: true,
+        position: "bottom-end",
+        icon: "error",
+        title: "Registration failed!",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          popup: "small-toast",
+        }
+      });
+
+    });
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center mt-4">
-      <div className=" bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="min-h-screen flex flex-col justify-center items-center mt-2">
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* Left side - Image and tagline */}
           <div className="bg-blue-600 md:w-2/5 p-8 text-white flex flex-col justify-center">
@@ -296,7 +330,7 @@ const DoctorFields = ({ register, errors }) => {
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <InputField
-          // icon={<BookMedical className="text-gray-500" />}
+          icon={<UserCog className="text-gray-500" />}
           label="Specialization"
           name="specialization"
           register={register}
