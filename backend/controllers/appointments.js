@@ -87,7 +87,7 @@ export const fetchAppointments = async (req, res) => {
         JOIN doctors d ON a.doctor_id = d.user_id
         JOIN users u ON d.user_id = u.id
         WHERE a.patient_id = ${patientId}
-        ORDER BY a.appointment_date DESC, a.appointment_time DESC;
+        ORDER BY a.appointment_date DESC, a.created_at DESC;
       `;
 
     res.status(200).json({ success: true, appointments });
@@ -98,5 +98,30 @@ export const fetchAppointments = async (req, res) => {
 };
 
 export const cancelAppointment = async (req, res) => {
-  
-}
+  try {
+    const { appointmentId } = req.params;
+    console.log(appointmentId);
+    if (!appointmentId) {
+      return res.status(400).json({ error: "Appointment ID is required" });
+    }
+
+    // Check if the appointment exists
+    const existingAppointment = await sql`
+      SELECT * FROM appointments WHERE id = ${appointmentId};
+    `;
+
+    if (existingAppointment.length === 0) {
+      return res.status(404).json({ error: "Appointment not found" });
+    }
+
+    // Delete the appointment
+    await sql`
+      DELETE FROM appointments WHERE id = ${appointmentId};
+    `;
+
+    return res.status(200).json({ message: "Appointment deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting appointment:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};

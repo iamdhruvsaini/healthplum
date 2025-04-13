@@ -1,28 +1,45 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getBaseURL } from '../../utils/getBaseURL';
 
-
-// Define a service using a base URL and expected endpoints
 export const patientApi = createApi({
   reducerPath: 'patientApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${getBaseURL()}/api` }),
+  tagTypes: ['Appointments', 'Patient'], // define tag types
   endpoints: (builder) => ({
     bookAppointment: builder.mutation({
-        query: (FormData) => ({
-          url: `/patients/book-appointment`,
-          method: 'POST',
-          body: FormData,
-        }),
+      query: (FormData) => ({
+        url: `/patients/book-appointment`,
+        method: 'POST',
+        body: FormData,
+      }),
+      invalidatesTags: ['Appointments'], // invalidate appointments to refetch updated data
     }),
+
     getPatientAppointments: builder.query({
-        query: (patientId) => `/patients/get-appointments/${patientId}`,
+      query: (patientId) => `/patients/get-appointments/${patientId}`,
+      providesTags: ['Appointments'], // associate this data with the Appointments tag
     }),
+
     getPatientDetails: builder.query({
       query: (patientId) => `/patients/patient-details/${patientId}`,
-  }),
-  }),
-})
+      providesTags: ['Patient'], // tag to help refetch patient details if needed
+    }),
 
-export const {useBookAppointmentMutation,useGetPatientAppointmentsQuery,useGetPatientDetailsQuery} = patientApi;
-export default patientApi ;
+    cancelAppointment: builder.mutation({
+      query: (appointmentId) => ({
+        url: `/patients/cancel-appointment/${appointmentId}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['Appointments'], // ensures UI refreshes appointment list
+    }),
+  }),
+});
+
+export const {
+  useBookAppointmentMutation,
+  useGetPatientAppointmentsQuery,
+  useGetPatientDetailsQuery,
+  useCancelAppointmentMutation,
+} = patientApi;
+
+export default patientApi;

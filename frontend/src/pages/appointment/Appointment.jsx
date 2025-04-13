@@ -1,4 +1,5 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   Calendar,
   Clock,
@@ -9,11 +10,16 @@ import {
   Clock as ClockIcon,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import { useGetPatientAppointmentsQuery, useGetPatientDetailsQuery } from "../../redux/api/patientAPI";
+import {
+  useCancelAppointmentMutation,
+  useGetPatientAppointmentsQuery,
+  useGetPatientDetailsQuery,
+} from "../../redux/api/patientAPI";
 
 export default function Appointment() {
   const { currentUser } = useAuth();
   const patientId = currentUser?.id;
+  const [cancelAppointment] = useCancelAppointmentMutation();
 
   const {
     data: appointments = [],
@@ -23,12 +29,9 @@ export default function Appointment() {
     skip: !patientId, // avoid calling before user is loaded
   });
 
-  const {
-    data: patient,
-  } = useGetPatientDetailsQuery(patientId, {
+  const { data: patient } = useGetPatientDetailsQuery(patientId, {
     skip: !patientId, // avoid calling before user is loaded
   });
-
 
   // Helper function to format date
   const formatDate = (dateString) => {
@@ -86,6 +89,38 @@ export default function Appointment() {
     );
   };
 
+  // handle cancellation
+  const handleCancelation = async (appointmentId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Cancel it!",
+      customClass: {
+        popup: "compact-swal",
+        title: "compact-title",
+        htmlContainer: "compact-text",
+      },
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Canceled !",
+          text: "Your Appointment is cancelled",
+          icon: "success",
+          customClass: {
+            popup: "compact-swal",
+            title: "compact-title",
+            htmlContainer: "compact-text",
+          },
+        });
+        await cancelAppointment(appointmentId);
+      }
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -123,7 +158,7 @@ export default function Appointment() {
                 {patient.email} • {patient.phone_number}
               </p>
             </div>
-            <Link to={'/find-doctor'} className="mt-4 md:mt-0">
+            <Link to={"/find-doctor"} className="mt-4 md:mt-0">
               <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 Book New Appointment
               </button>
@@ -198,7 +233,10 @@ export default function Appointment() {
 
                       <div className="mt-3 flex space-x-3">
                         {appointment.status === "pending" && (
-                          <button className="text-sm font-medium text-red-600 hover:text-red-500">
+                          <button
+                            className="text-sm font-medium text-red-600 hover:text-red-500"
+                            onClick={() => handleCancelation(appointment.id)}
+                          >
                             Cancel
                           </button>
                         )}

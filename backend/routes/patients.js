@@ -7,7 +7,7 @@ const router=express.Router();
 
 router.get('/get-appointments/:patientId',fetchAppointments);
 router.get('/patient-details/:patientId',fetchPatientDetails);
-router.put('/cancel-appointment/:appointmentId',cancelAppointment);
 router.post('/book-appointment',bookAppointment);
+router.put('/cancel-appointment/:appointmentId',cancelAppointment);
 
 export default router;
