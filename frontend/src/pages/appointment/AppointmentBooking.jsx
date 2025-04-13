@@ -4,11 +4,14 @@ import { Calendar, Clock, CheckCircle, AlertCircle, ArrowLeft, ArrowRight, Star,
 import { useFetchDoctorsByIdQuery } from '../../redux/api/doctorsAPI';
 import { useParams } from 'react-router-dom';
 import m_doctor from "../../assets/images/m_doctor.jpg";  
+import { useAuth } from '../../context/AuthContext';
 
 export default function AppointmentBooking() {
   const [currentStep, setCurrentStep] = useState(1);
   const { doctorId } = useParams(); 
   const { data: doctor, isLoading } = useFetchDoctorsByIdQuery(doctorId);
+  const {currentUser}=useAuth();
+  console.log(currentUser);
   
   // Use React Hook Form
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
@@ -20,8 +23,8 @@ export default function AppointmentBooking() {
       isInsurance: 'true', // String value for radio buttons to work correctly
       insuranceProvider: '',
       insuranceId: '',
-      patientName: '',
-      patientEmail: '',
+      patientName: currentUser.name,
+      patientEmail: currentUser.email,
       patientPhone: ''
     }
   });

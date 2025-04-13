@@ -45,6 +45,7 @@ export const loginUser = async (req, res) => {
         {
           id: user.id,
           email: user.email,
+          name:user.name,
           role: user.role,
         },
         JWT_SECRET,

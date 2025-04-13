@@ -11,6 +11,8 @@ import AppointmentBooking from '../pages/appointment/AppointmentBooking';
 import SignupPage from '../pages/signup/SignUpPage';
 import Appointment from '../pages/appointment/Appointment';
 import DoctorDashboard from '../pages/doctors/DoctorDashboard';
+import { PatientProfile } from '../pages/profile/PatientProfile';
+import { DoctorProfile } from '../pages/profile/DocotorProfile';
 
 
 
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
       {
         path:'doctor/:doctorId',
         element:<DoctorDashboard/>  
+      },
+      {
+        path:'patient-profile',
+        element:<PatientProfile/>
+      },
+      {
+        path:'doctor-profile',
+        element:<DoctorProfile/>
       }
     ]
   }
