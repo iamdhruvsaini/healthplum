@@ -32,6 +32,12 @@ export const patientApi = createApi({
       }),
       invalidatesTags: ['Appointments'], // ensures UI refreshes appointment list
     }),
+
+    getPatientProfile: builder.query({
+      query: (patientId) => `/patients/get-patient-profile/${patientId}`,
+      providesTags: ['Patient'], // tag to help refetch patient profile if needed
+    }),
+
   }),
 });
 
@@ -40,6 +46,7 @@ export const {
   useGetPatientAppointmentsQuery,
   useGetPatientDetailsQuery,
   useCancelAppointmentMutation,
+  useGetPatientProfileQuery
 } = patientApi;
 
 export default patientApi;
