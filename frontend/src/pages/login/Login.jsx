@@ -1,15 +1,49 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { User, UserCog, Users, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import Swal from "sweetalert2";
 
-const Login= () => {
+const Login = () => {
   const [userType, setUserType] = useState("patient");
   const [showPassword, setShowPassword] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { loginUser } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
     console.log("Login attempt:", { ...data, userType });
-    // Handle login submission here
+    loginUser(data)
+      .then((response) => {
+        Swal.fire({
+          toast: true,
+          position: "bottom-end",
+          icon: "success",
+          title: "Login successful!",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "small-toast",
+          },
+        });
+        reset();
+      })
+      .catch((error) => {
+        Swal.fire({
+          toast: true,
+          position: "top",
+          icon: "error",
+          title: "Login failed!",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "small-toast",
+          },
+        });
+      });
   };
 
   const togglePasswordVisibility = () => {
@@ -23,7 +57,10 @@ const Login= () => {
           {/* Left side - Brand and tagline */}
           <div className="bg-blue-600 md:w-2/5 p-8 text-white flex flex-col justify-center">
             <h1 className="text-3xl font-bold mb-4">HealthPlum</h1>
-            <p className="text-blue-100 mb-6">Your health, our priority. Access your healthcare services with a simple login.</p>
+            <p className="text-blue-100 mb-6">
+              Your health, our priority. Access your healthcare services with a
+              simple login.
+            </p>
             <div className="mt-6">
               <div className="flex items-center space-x-2 text-blue-100 mb-3">
                 <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
@@ -48,35 +85,40 @@ const Login= () => {
 
           {/* Right side - Login form */}
           <div className="md:w-3/5 p-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">Welcome Back</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+              Welcome Back
+            </h2>
             <p className="text-gray-600 mb-6">Sign in to your account</p>
-            
+
             {/* User type selector */}
             <div className="flex flex-wrap mb-6 gap-2">
-              <UserTypeButton 
-                icon={<User />} 
-                label="Patient" 
-                active={userType === "patient"} 
-                onClick={() => setUserType("patient")} 
+              <UserTypeButton
+                icon={<User />}
+                label="Patient"
+                active={userType === "patient"}
+                onClick={() => setUserType("patient")}
               />
-              <UserTypeButton 
-                icon={<UserCog />} 
-                label="Doctor" 
-                active={userType === "doctor"} 
-                onClick={() => setUserType("doctor")} 
+              <UserTypeButton
+                icon={<UserCog />}
+                label="Doctor"
+                active={userType === "doctor"}
+                onClick={() => setUserType("doctor")}
               />
-              <UserTypeButton 
-                icon={<Users />} 
-                label="Staff" 
-                active={userType === "staff"} 
-                onClick={() => setUserType("staff")} 
+              <UserTypeButton
+                icon={<Users />}
+                label="Staff"
+                active={userType === "staff"}
+                onClick={() => setUserType("staff")}
               />
             </div>
 
             {/* Login form */}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-1">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Email Address
                 </label>
                 <div className="relative">
@@ -102,12 +144,17 @@ const Login= () => {
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-red-500 text-xs italic mt-1">{errors.email.message}</p>
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -142,7 +189,9 @@ const Login= () => {
                   </div>
                 </div>
                 {errors.password && (
-                  <p className="text-red-500 text-xs italic mt-1">{errors.password.message}</p>
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
@@ -154,7 +203,10 @@ const Login= () => {
                     className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                     {...register("rememberMe")}
                   />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                  <label
+                    htmlFor="remember-me"
+                    className="ml-2 block text-sm text-gray-700"
+                  >
                     Remember me
                   </label>
                 </div>
@@ -184,7 +236,10 @@ const Login= () => {
               <div className="mt-8 pt-6 border-t border-gray-200">
                 <div className="text-center">
                   <p className="text-sm text-gray-600">
-                    Need urgent care? <a href="#" className="text-blue-600 hover:underline">Book an emergency consultation</a>
+                    Need urgent care?{" "}
+                    <a href="#" className="text-blue-600 hover:underline">
+                      Book an emergency consultation
+                    </a>
                   </p>
                 </div>
               </div>

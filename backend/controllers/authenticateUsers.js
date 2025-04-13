@@ -1,8 +1,12 @@
 import { sql } from "../database/database.config.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const loginUser = async (req, res) => {
     try {
+      const JWT_SECRET= process.env.JWT_SECRET;
       const { email, password } = req.body;
   
       // 1. Basic input check

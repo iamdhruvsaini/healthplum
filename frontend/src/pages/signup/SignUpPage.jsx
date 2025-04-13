@@ -13,8 +13,8 @@ import {
   DollarSign,
   CheckCircle,
 } from "lucide-react";
-import { useRegisterUserMutation } from "../../redux/api/authenticationAPI";
 import Swal from "sweetalert2";
+import { useAuth } from "../../context/AuthContext";
 
 const SignUpPage = () => {
   const [userType, setUserType] = useState("patient");
@@ -24,7 +24,7 @@ const SignUpPage = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const [registerUser] = useRegisterUserMutation();
+  const { registerUser } = useAuth();
 
   // Reset form when user type changes to avoid field data persistence
   const handleUserTypeChange = (type) => {
@@ -89,9 +89,9 @@ const SignUpPage = () => {
       .catch((error) => {
         Swal.fire({
           toast: true,
-          position: "bottom-end",
+          position: "top",
           icon: "error",
-          title: "Registration failed!",
+          title: "Login failed!",
           showConfirmButton: false,
           timer: 1500,
           customClass: {
