@@ -22,7 +22,7 @@ const Home = () => {
     isLoading,
     isError,
   } = useFetchTrendingDoctorsQuery();
-  console.log(doctors);
+ 
 
   return (
     <section className="">

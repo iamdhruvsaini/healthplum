@@ -13,6 +13,7 @@ import Appointment from '../pages/appointment/Appointment';
 import DoctorDashboard from '../pages/doctors/DoctorDashboard';
 import { PatientProfile } from '../pages/profile/PatientProfile';
 import { DoctorProfile } from '../pages/profile/DocotorProfile';
+import PrivateRoute from './PrivateRoute';
 
 
 
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path:'services',
-        element:<HealthServices/>  
+        element:<PrivateRoute><HealthServices/></PrivateRoute> 
       },
       {
         path:'about',
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path:'find-doctor',
-        element:<DoctorFinder/>
+        element:<PrivateRoute><DoctorFinder/></PrivateRoute>
       },
       {
         path:'contact',
@@ -53,23 +54,23 @@ const router = createBrowserRouter([
       },
       {
         path:`appointment/:doctorId`,
-        element:<AppointmentBooking/>
+        element:<PrivateRoute><AppointmentBooking/></PrivateRoute>
       },
       {
         path:'appointments',
-        element:<Appointment/>
+        element:<PrivateRoute><Appointment/></PrivateRoute>
       },
       {
         path:'doctor/:doctorId',
-        element:<DoctorDashboard/>  
+        element:<PrivateRoute><DoctorDashboard/></PrivateRoute>
       },
       {
         path:'patient-profile',
-        element:<PatientProfile/>
+        element:<PrivateRoute><PatientProfile/></PrivateRoute>
       },
       {
         path:'doctor-profile',
-        element:<DoctorProfile/>
+        element:<PrivateRoute><DoctorProfile/></PrivateRoute>
       },
       
     ]
