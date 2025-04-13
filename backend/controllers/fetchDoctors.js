@@ -67,4 +67,30 @@ export const fetchDoctorById = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: "An error occurred while fetching doctor details.", error: error.message });
     }
-}
+};
+
+export const fetchTrendingDoctors = async (req, res) => {
+    try {
+      const trendingDoctors = await sql`
+        SELECT 
+          u.id AS doctor_id,
+          u.name,
+          u.email,
+          d.specialization,
+          d.qualifications,
+          d.experience_years,
+          d.consultation_fee,
+          d.face_url,
+          d.rating,
+          d.available
+        FROM doctors d
+        JOIN users u ON d.user_id = u.id
+        WHERE d.trending = true;
+      `;
+  
+      return res.status(200).json(trendingDoctors);
+    } catch (error) {
+      console.error('Error fetching trending doctors:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};

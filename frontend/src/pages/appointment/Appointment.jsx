@@ -23,13 +23,13 @@ export default function Appointment() {
 
   const {
     data: appointments = [],
-    error,
-    isLoading,
+    error:patientAppointmentError,
+    isLoading:patientAppointmentLoading,
   } = useGetPatientAppointmentsQuery(patientId, {
     skip: !patientId, // avoid calling before user is loaded
   });
 
-  const { data: patient } = useGetPatientDetailsQuery(patientId, {
+  const { data: patient,isLoading:patientDetailsLoading,error:patientDetailsError} = useGetPatientDetailsQuery(patientId, {
     skip: !patientId, // avoid calling before user is loaded
   });
 
@@ -121,7 +121,7 @@ export default function Appointment() {
     });
   };
 
-  if (isLoading) {
+  if (patientAppointmentLoading || patientDetailsLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
         <div className="text-center">
@@ -132,7 +132,7 @@ export default function Appointment() {
     );
   }
 
-  if (error) {
+  if (patientAppointmentError || patientDetailsError) {
     return (
       <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800 mx-auto max-w-3xl mt-8">
         <div className="flex">

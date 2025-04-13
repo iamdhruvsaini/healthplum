@@ -7,9 +7,11 @@ function App() {
   return (
     <>
       <AuthProvider>
-          <Navbar />
+        <Navbar />
         <main className="xl:w-[1300px] mx-auto px-4">
-          <Outlet></Outlet>
+          <Outlet>
+
+          </Outlet>
         </main>
         <Footer/>
       </AuthProvider>

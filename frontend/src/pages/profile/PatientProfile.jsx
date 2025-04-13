@@ -7,13 +7,13 @@ export function PatientProfile() {
   const { currentUser } = useAuth();
   const patientId = currentUser?.id;
   
-  const { data: patientData } = useGetPatientProfileQuery(patientId);
-  const { data: appointments, isLoading, isError } = useGetPatientAppointmentsQuery(patientId);
+  const { data: patientData ,isLoading:profileQueryLoading,isError:profileQueryError} = useGetPatientProfileQuery(patientId);
+  const { data: appointments, isLoading:appointmentQueryLoading , isError:appointmentQueryError } = useGetPatientAppointmentsQuery(patientId);
   
   const patient = patientData?.patient;
   const patientAppointments = appointments?.appointments || [];
 
-  if (isLoading) {
+  if (profileQueryLoading || appointmentQueryLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -21,7 +21,7 @@ export function PatientProfile() {
     );
   }
 
-  if (isError) {
+  if (profileQueryError || appointmentQueryError) {
     return (
       <div className="bg-red-50 p-6 rounded-lg text-red-600 max-w-3xl mx-auto my-4 shadow-sm">
         <p className="text-center font-medium">An error occurred while fetching your data. Please try again later.</p>
