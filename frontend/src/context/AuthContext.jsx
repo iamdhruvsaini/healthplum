@@ -57,7 +57,6 @@ export const AuthProvider = ({ children }) => {
     logout,
   };
 
-  console.log(currentUser);
   if(!loading){
     return <AuthContext.Provider value={value}>
         {children}

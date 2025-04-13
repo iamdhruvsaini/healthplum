@@ -11,7 +11,7 @@ export default function AppointmentBooking() {
   const { doctorId } = useParams(); 
   const { data: doctor, isLoading } = useFetchDoctorsByIdQuery(doctorId);
   const {currentUser}=useAuth();
-  console.log(currentUser);
+
   
   // Use React Hook Form
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
@@ -25,7 +25,9 @@ export default function AppointmentBooking() {
       insuranceId: '',
       patientName: currentUser.name,
       patientEmail: currentUser.email,
-      patientPhone: ''
+      patientPhone: '',
+      patientId: currentUser.id,
+      doctorId:doctorId
     }
   });
   
