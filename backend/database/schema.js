@@ -36,10 +36,7 @@ export const HealthPlumSchema =async ()=>{
     await sql`
     CREATE TABLE IF NOT EXISTS staff (
       user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-      gender VARCHAR(10) CHECK (gender IN ('male', 'female', 'other')),
-      age INT CHECK (age > 0),
       phone_number VARCHAR(15),
-      address TEXT,
       department VARCHAR(100) NOT NULL,
       position VARCHAR(100) NOT NULL,
       employee_id VARCHAR(50) UNIQUE NOT NULL
