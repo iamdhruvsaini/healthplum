@@ -10,7 +10,7 @@ export const patientApi = createApi({
   endpoints: (builder) => ({
     bookAppointment: builder.mutation({
         query: (FormData) => ({
-          url: `/book/book-appointment`,
+          url: `/patients/book-appointment`,
           method: 'POST',
           body: FormData,
         }),

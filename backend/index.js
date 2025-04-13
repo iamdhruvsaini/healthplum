@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import { HealthPlumSchema } from "./database/schema.js";
-import getDoctors from "./routes/getDoctors.js";
+import getDoctors from "./routes/doctors.js";
 import authentication from "./routes/authentication.js";
-import getPatients from "./routes/getPatients.js";
-import bookAppointment  from "./routes/bookAppointment.js";
+import getPatients from "./routes/patients.js";
+
 
 dotenv.config();
 
@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
 app.use("/api/doctors", getDoctors);
 app.use("/api/authentication", authentication);
 app.use("/api/patients", getPatients);
-app.use("/api/book", bookAppointment);
 // < ---- 
 
 
