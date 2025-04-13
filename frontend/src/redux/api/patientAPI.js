@@ -1,7 +1,7 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getBaseURL } from '../../utils/getBaseURL';
-import { bookAppointment } from '../../../../backend/controllers/appointmentBooking';
+
 
 // Define a service using a base URL and expected endpoints
 export const patientApi = createApi({
@@ -10,14 +10,19 @@ export const patientApi = createApi({
   endpoints: (builder) => ({
     bookAppointment: builder.mutation({
         query: (FormData) => ({
-          url: `/book/appointment`,
+          url: `/book/book-appointment`,
           method: 'POST',
           body: FormData,
         }),
-      }),
-    
+    }),
+    getPatientAppointments: builder.query({
+        query: (patientId) => `/patients/get-appointments/${patientId}`,
+    }),
+    getPatientDetails: builder.query({
+      query: (patientId) => `/patients/patient-details/${patientId}`,
+  }),
   }),
 })
 
-export const { useFetchDoctorsQuery,useFetchDoctorsByIdQuery} = doctorApi;
-export default doctorApi ;
+export const {useBookAppointmentMutation,useGetPatientAppointmentsQuery,useGetPatientDetailsQuery} = patientApi;
+export default patientApi ;
