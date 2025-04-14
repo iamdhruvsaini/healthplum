@@ -28,7 +28,7 @@ const Login = () => {
       if (response?.error) {
         throw new Error("Login failed");
       }
-  
+      const user = response?.data?.user?.role;
       Swal.fire({
         toast: true,
         position: "bottom-end",
@@ -42,7 +42,12 @@ const Login = () => {
       });
       
       reset();
-      navigate("/");
+      if(user==="patient"){
+        navigate("/");
+      }
+      else if(user==="doctor"){
+        navigate("/doctor-portal");
+      }
     } catch (error) {
       console.log(error);
       Swal.fire({

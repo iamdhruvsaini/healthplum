@@ -16,13 +16,17 @@ export const doctorApi = createApi({
     fetchTrendingDoctors: builder.query({
       query: () => `get-trending-doctor/`,
     }),
+    fetchAppointmentByDoctorID: builder.query({
+      query: (id) => `get-appointment-by-doctor-id/${id}`,
+    }),
   }),
 })
 
 export const {
    useFetchDoctorsQuery,
    useFetchDoctorsByIdQuery,
-   useFetchTrendingDoctorsQuery
+   useFetchTrendingDoctorsQuery,
+   useFetchAppointmentByDoctorIDQuery,
   } = doctorApi;
   
 export default doctorApi ;

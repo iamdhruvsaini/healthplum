@@ -125,3 +125,49 @@ export const cancelAppointment = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+export const getAppointmentsByDoctorId = async (req, res) => {
+  try {
+    const { doctorId } = req.params;
+
+    if (!doctorId) {
+      return res.status(400).json({ error: "Doctor ID is required" });
+    }
+
+    const appointments = await sql`
+      SELECT 
+        a.id,
+        a.appointment_date,
+        a.appointment_time,
+        a.reason,
+        a.status,
+        u.name AS patient_name,
+        p.age AS patient_age,
+        p.gender AS patient_gender
+      FROM appointments a
+      JOIN patients p ON a.patient_id = p.user_id
+      JOIN users u ON p.user_id = u.id
+      WHERE a.doctor_id = ${doctorId}
+      ORDER BY a.appointment_date, a.appointment_time;
+    `;
+
+    const formattedAppointments = appointments.map((apt) => ({
+      id: apt.id,
+      appointment_date: apt.appointment_date,
+      appointment_time: apt.appointment_time,
+      reason: apt.reason,
+      status: apt.status,
+      patient: {
+        name: apt.patient_name,
+        age: apt.patient_age,
+        gender: apt.patient_gender,
+      },
+    }));
+
+    res.status(200).json(formattedAppointments);
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

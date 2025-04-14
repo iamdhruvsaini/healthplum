@@ -10,7 +10,6 @@ import ContactPage from '../pages/contact/ContactPage';
 import AppointmentBooking from '../pages/appointment/AppointmentBooking';
 import SignupPage from '../pages/signup/SignUpPage';
 import Appointment from '../pages/appointment/Appointment';
-import DoctorDashboard from '../pages/doctors/DoctorDashboard';
 import { PatientProfile } from '../pages/profile/PatientProfile';
 import { DoctorProfile } from '../pages/profile/DocotorProfile';
 import PrivateRoute from './PrivateRoute';
@@ -19,6 +18,7 @@ import Heart from '../pages/prediction/Heart';
 import BreastCancer from '../pages/prediction/BreastCancer';
 import CaloriePrediction from '../pages/prediction/Calories';
 import InsurancePricePrediction from '../pages/prediction/Insurance';
+import DoctorDashboard from '../pages/doctors/DoctorDashboard';
 
 
 
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path:'doctor/:doctorId',
-        element:<PrivateRoute><DoctorDashboard/></PrivateRoute>
+        element:<PrivateRoute><DoctorProfile/></PrivateRoute>
       },
       {
         path:'patient-profile',
@@ -99,6 +99,10 @@ const router = createBrowserRouter([
       }
       
     ]
+  },
+  {
+    path:'/doctor-portal',
+    element:<DoctorDashboard/>,
   }
 ]);
 

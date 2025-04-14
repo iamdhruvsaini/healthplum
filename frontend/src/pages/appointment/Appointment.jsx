@@ -139,7 +139,7 @@ export default function Appointment() {
           <AlertCircle className="h-5 w-5 text-red-400 mr-2" />
           <h3 className="text-sm font-medium">Error loading appointments</h3>
         </div>
-        <div className="mt-2 text-sm">{error}</div>
+        <div className="mt-2 text-sm">{"Server is Down"}</div>
       </div>
     );
   }
