@@ -168,9 +168,9 @@ export default function AppointmentBooking() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden mt-4 px-8 mx-auto">
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden mt-4 py-4 mx-auto">
       {/* Header with doctor info */}
-      <div className="bg-gray-50 p-4 md:p-6 border-b border-gray-200">
+      <div className="bg-gray-50 md:p-6 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row sm:items-center">
           <div className="flex items-center mb-4 sm:mb-0">
             <img
