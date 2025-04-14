@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, User, FileText, CheckCircle, XCircle, AlertCircle, Filter, Search, ChevronDown, Settings, Bell, LogOut } from 'lucide-react';
+import React, { useState} from 'react';
+import { Calendar, Clock, User, FileText, CheckCircle, XCircle, AlertCircle,Search } from 'lucide-react';
 import DoctorNavbar from './DoctorNavbar';
 import { useAuth } from '../../context/AuthContext';
 import { useFetchAppointmentByDoctorIDQuery, useFetchDoctorsByIdQuery } from '../../redux/api/doctorsAPI';

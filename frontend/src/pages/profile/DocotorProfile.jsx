@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Clock, Star, Phone, MapPin, Mail, Award, Briefcase, User, Activity, Clipboard, Truck, CheckCircle, Bell, Settings, LogOut, FileText } from 'lucide-react';
+import { Calendar, Clock, Star } from 'lucide-react';
 
 // Doctor Profile Component
 export function DoctorProfile() {

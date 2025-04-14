@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Phone, MapPin, Calendar, Clock, Activity, ChevronRight } from 'lucide-react';
+import { User, Phone, MapPin, Calendar, Clock, Activity } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useGetPatientAppointmentsQuery, useGetPatientProfileQuery } from '../../redux/api/patientAPI';
 
