@@ -32,7 +32,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/healthplum.git
+   git clone https://github.com/iamdhruvsaini/healthplum.git
    cd healthplum
    ```
 
