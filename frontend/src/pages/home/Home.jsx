@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import doctorsImage from "../../assets/images/doctors.png";
 
-import { Clock, Coins } from "lucide-react";
+import { Clock, ClockFading, Coins } from "lucide-react";
 
 import bigPoster from "../../assets/images/bigPoster.svg";
 import { useFetchTrendingDoctorsQuery } from "../../redux/api/doctorsAPI";
@@ -22,7 +22,7 @@ const Home = () => {
     isLoading,
     isError,
   } = useFetchTrendingDoctorsQuery();
-  
+
   if(isLoading){
     <div className="flex items-center justify-center h-screen">
         <ClockFading className="h-10 w-10 animate-spin text-blue-600" />
