@@ -1,3 +1,3 @@
 export const getBaseURL=()=>{
-    return "http://localhost:3000";
+    return "https://healthplum-backend.vercel.app";
 }
