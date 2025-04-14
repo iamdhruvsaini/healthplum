@@ -39,7 +39,7 @@ export default function DoctorFinder() {
 
   
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 font-sans">
+    <div className="min-h-screen bg-gray-50 py-6 font-sans">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">

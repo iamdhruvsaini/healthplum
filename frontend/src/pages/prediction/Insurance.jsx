@@ -122,7 +122,7 @@ const InsurancePricePrediction = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex justify-center items-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex justify-center items-center py-4">
       <div className="w-full">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header */}

@@ -94,7 +94,7 @@ const Heart = () => {
   };
 
   return (
-    <div className=" mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className=" mx-auto py-6 bg-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold text-center mb-6 text-blue-800">
         Heart Disease Risk Assessment
       </h1>

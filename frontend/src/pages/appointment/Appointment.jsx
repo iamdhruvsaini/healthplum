@@ -134,7 +134,7 @@ export default function Appointment() {
 
   if (patientAppointmentError || patientDetailsError) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800 mx-auto max-w-3xl mt-8">
+      <div className="bg-red-50 border border-red-200 rounded-lg text-red-800 mx-auto max-w-3xl mt-8">
         <div className="flex">
           <AlertCircle className="h-5 w-5 text-red-400 mr-2" />
           <h3 className="text-sm font-medium">Error loading appointments</h3>

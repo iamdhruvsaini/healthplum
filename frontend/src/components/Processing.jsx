@@ -30,8 +30,8 @@ export default function Processing() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+      <div className="w-full max-w-md bg-gray-50 rounded-2xl shadow-xl overflow-hidden">
         <div className="p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="relative">

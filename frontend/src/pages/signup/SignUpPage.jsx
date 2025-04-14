@@ -106,7 +106,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center mt-2 p-8">
+    <div className="min-h-screen flex flex-col justify-center items-center mt-2">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* Left side - Image and tagline */}
