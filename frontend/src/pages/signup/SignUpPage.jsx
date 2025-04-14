@@ -12,6 +12,7 @@ import {
   Award,
   DollarSign,
   CheckCircle,
+  Loader,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { useAuth } from "../../context/AuthContext";
@@ -19,7 +20,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [userType, setUserType] = useState("patient");
-  const navigate= useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -35,6 +37,9 @@ const SignUpPage = () => {
   };
 
   const onSubmit = (data) => {
+    // Set submitting state to true to disable the button
+    setIsSubmitting(true);
+    
     // Remove fields that aren't relevant to the selected user type
     let userData = { ...data, role: userType };
 
@@ -88,7 +93,6 @@ const SignUpPage = () => {
         });
         reset(); // Reset the form after successful registration
         navigate("/login"); // Redirect to login page after successful registration
-
       })
       .catch((error) => {
         Swal.fire({
@@ -102,6 +106,10 @@ const SignUpPage = () => {
             popup: "small-toast",
           },
         });
+      })
+      .finally(() => {
+        // Reset submitting state regardless of success or failure
+        setIsSubmitting(false);
       });
   };
 
@@ -245,9 +253,19 @@ const SignUpPage = () => {
               <div className="mt-6">
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+                  disabled={isSubmitting}
+                  className={`w-full ${
+                    isSubmitting ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+                  } text-white py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center`}
                 >
-                  <span>Create Account</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader className="animate-spin h-5 w-5 mr-2" />
+                      <span>Processing...</span>
+                    </>
+                  ) : (
+                    <span>Create Account</span>
+                  )}
                 </button>
               </div>
             </form>

@@ -22,7 +22,12 @@ const Home = () => {
     isLoading,
     isError,
   } = useFetchTrendingDoctorsQuery();
- 
+  
+  if(isLoading){
+    <div className="flex items-center justify-center h-screen">
+        <ClockFading className="h-10 w-10 animate-spin text-blue-600" />
+    </div>
+  }
 
   return (
     <section className="">

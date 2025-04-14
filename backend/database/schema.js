@@ -9,7 +9,7 @@ export const HealthPlumSchema =async ()=>{
         password TEXT NOT NULL,
         role VARCHAR(20) CHECK (role IN ('doctor', 'patient','staff')) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );`
+    );` 
 
     await sql `
         CREATE TABLE IF NOT EXISTS doctors (

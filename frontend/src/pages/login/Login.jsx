@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { User, UserCog, Users, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { User, UserCog, Users, Mail, Lock, Eye, EyeOff, Loader } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,7 +10,8 @@ import Processing from "../../components/Processing";
 const Login = () => {
   const [userType, setUserType] = useState("patient");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading,setIsLoading]=useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { loginUser } = useAuth();
   const navigate = useNavigate();
   const {
@@ -21,6 +22,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setIsSubmitting(true);
     setIsLoading(true);
     try {
       const response = await loginUser(data);
@@ -42,10 +44,10 @@ const Login = () => {
       });
       
       reset();
-      if(user==="patient"){
+      if(user === "patient"){
         navigate("/");
       }
-      else if(user==="doctor"){
+      else if(user === "doctor"){
         navigate("/doctor-portal");
       }
     } catch (error) {
@@ -61,8 +63,9 @@ const Login = () => {
           popup: "small-toast",
         },
       });
-    }finally{
+    } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -241,9 +244,19 @@ const Login = () => {
               <div className="mt-6">
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+                  disabled={isSubmitting}
+                  className={`w-full ${
+                    isSubmitting ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+                  } text-white py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center`}
                 >
-                  <span>Sign In</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader className="animate-spin h-5 w-5 mr-2" />
+                      <span>Signing In...</span>
+                    </>
+                  ) : (
+                    <span>Sign In</span>
+                  )}
                 </button>
               </div>
             </form>
