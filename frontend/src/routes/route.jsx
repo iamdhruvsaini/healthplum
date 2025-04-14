@@ -14,6 +14,11 @@ import DoctorDashboard from '../pages/doctors/DoctorDashboard';
 import { PatientProfile } from '../pages/profile/PatientProfile';
 import { DoctorProfile } from '../pages/profile/DocotorProfile';
 import PrivateRoute from './PrivateRoute';
+import ParkinsonsForm from '../pages/prediction/Parkinson';
+import Heart from '../pages/prediction/Heart';
+import BreastCancer from '../pages/prediction/BreastCancer';
+import CaloriePrediction from '../pages/prediction/Calories';
+import InsurancePricePrediction from '../pages/prediction/Insurance';
 
 
 
@@ -72,6 +77,26 @@ const router = createBrowserRouter([
         path:'doctor-profile',
         element:<PrivateRoute><DoctorProfile/></PrivateRoute>
       },
+      {
+        path:'/parkinson-disease-detection',
+        element:<PrivateRoute><ParkinsonsForm/></PrivateRoute>
+      },
+      {
+        path:'/heart-disease-detection',
+        element:<PrivateRoute><Heart/></PrivateRoute>
+      },
+      {
+        path:'/breast-cancer-detection',
+        element:<PrivateRoute><BreastCancer/></PrivateRoute>
+      },
+      {
+        path:'/calories-prediction',
+        element:<PrivateRoute><CaloriePrediction/></PrivateRoute>
+      },
+      {
+        path:'/insurance-prediction',
+        element:<PrivateRoute><InsurancePricePrediction/></PrivateRoute>
+      }
       
     ]
   }

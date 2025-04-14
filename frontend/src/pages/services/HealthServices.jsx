@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Stethoscope, Ambulance, Brain, Heart, Activity, ArrowRight, Calendar } from 'lucide-react';
+import { Stethoscope, Ambulance, Brain, Heart, Activity, ArrowRight, Calendar, Clipboard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function HealthServices() {
   const [activeTab, setActiveTab] = useState('detection');
   
-  // Disease detection models array - easy to add more in the future
+  // Updated disease detection models array to match your routes
   const diseaseModels = [
     {
       id: 'heart-disease',
@@ -17,11 +17,11 @@ export default function HealthServices() {
       iconColor: 'text-blue-600',
       buttonColor: 'text-blue-600',
       buttonHoverColor: 'hover:text-blue-800',
-      link: '/models/heart-disease'
+      link: '/heart-disease-detection'
     },
     {
       id: 'parkinsons',
-      name: 'Parkinson\'s Detection',
+      name: 'Parkinson\'s Disease Detection',
       description: 'Analysis of movement patterns, handwriting samples, and vocal biomarkers',
       icon: <Brain size={24} />,
       bgColor: 'bg-purple-50',
@@ -29,31 +29,43 @@ export default function HealthServices() {
       iconColor: 'text-purple-600',
       buttonColor: 'text-purple-600',
       buttonHoverColor: 'hover:text-purple-800',
-      link: '/models/parkinsons'
+      link: '/parkinson-disease-detection'
     },
     {
-      id: 'respiratory',
-      name: 'Respiratory Disease Detection',
-      description: 'Analysis of breathing patterns, chest X-rays, and symptom data',
+      id: 'breast-cancer',
+      name: 'Breast Cancer Detection',
+      description: 'Analysis of cell features to detect early signs of breast cancer',
+      icon: <Clipboard size={24} />,
+      bgColor: 'bg-pink-50',
+      iconBgColor: 'bg-pink-100',
+      iconColor: 'text-pink-600',
+      buttonColor: 'text-pink-600',
+      buttonHoverColor: 'hover:text-pink-800',
+      link: '/breast-cancer-detection'
+    },
+    {
+      id: 'calories-prediction',
+      name: 'Calories Prediction',
+      description: 'Estimate calorie requirements based on physical characteristics and activity level',
       icon: <Activity size={24} />,
       bgColor: 'bg-green-50',
       iconBgColor: 'bg-green-100',
       iconColor: 'text-green-600',
       buttonColor: 'text-green-600',
       buttonHoverColor: 'hover:text-green-800',
-      link: '/models/respiratory'
+      link: '/calories-prediction'
     },
     {
-      id: 'diabetes',
-      name: 'Diabetes Risk Assessment',
-      description: 'Blood glucose data analysis and lifestyle factor evaluation',
-      icon: <Activity size={24} />,
+      id: 'insurance-prediction',
+      name: 'Insurance Price Prediction',
+      description: 'Estimate health insurance costs based on personal health factors',
+      icon: <Clipboard size={24} />,
       bgColor: 'bg-yellow-50',
       iconBgColor: 'bg-yellow-100',
       iconColor: 'text-yellow-600',
       buttonColor: 'text-yellow-600',
       buttonHoverColor: 'hover:text-yellow-800',
-      link: '/models/diabetes'
+      link: '/insurance-prediction'
     }
   ];
   
@@ -63,7 +75,7 @@ export default function HealthServices() {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Modern Healthcare Services</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Advanced AI diagnostics and emergency services at your fingertips
+            Advanced AI diagnostics and healthcare solutions at your fingertips
           </p>
         </div>
         
@@ -79,7 +91,7 @@ export default function HealthServices() {
           >
             <div className="flex items-center gap-2">
               <Stethoscope size={20} />
-              <span>Disease Detection</span>
+              <span>Health Services</span>
             </div>
           </button>
           
@@ -101,14 +113,14 @@ export default function HealthServices() {
         {/* Content Based on Active Tab */}
         {activeTab === 'detection' ? (
           <div className="bg-white rounded-xl shadow-xl p-6 md:p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">AI-Powered Disease Detection</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">AI-Powered Health Services</h3>
             <p className="text-gray-600 mb-8">
-              Our advanced AI models can help detect early signs of various diseases with high accuracy.
-              Upload your medical data securely and receive instant preliminary results.
+              Our advanced AI models can help detect early signs of various diseases and provide health insights with high accuracy.
+              Select from our range of services below.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Map through disease models - easy to add more in the future */}
+              {/* Map through disease models */}
               {diseaseModels.map((model) => (
                 <div key={model.id} className={`${model.bgColor} rounded-lg p-6 transition-all hover:shadow-md`}>
                   <div className={`${model.iconBgColor} rounded-full w-12 h-12 flex items-center justify-center mb-4`}>
@@ -124,25 +136,11 @@ export default function HealthServices() {
                     to={model.link}
                     className={`flex items-center ${model.buttonColor} font-medium text-sm ${model.buttonHoverColor} transition-colors`}
                   >
-                    <span>Try Detection</span>
+                    <span>Access Service</span>
                     <ArrowRight size={16} className="ml-1" />
                   </Link>
                 </div>
               ))}
-              
-              {/* More Models Card */}
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-center">
-                <h4 className="text-lg font-semibold text-gray-700 mb-2">More Detection Models</h4>
-                <p className="text-gray-500 text-sm mb-4">
-                  Explore our full range of disease detection capabilities
-                </p>
-                <Link 
-                  to="/models"
-                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                >
-                  View All Models
-                </Link>
-              </div>
             </div>
           </div>
         ) : (
@@ -268,11 +266,9 @@ export default function HealthServices() {
                     </div>
                   </div>
                   
-                  <Link to="/schedule-transport" className="block w-full">
-                    <button className="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-200">
-                      Schedule Transport
-                    </button>
-                  </Link>
+                  <button className="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-200">
+                    Schedule Transport
+                  </button>
                 </div>
               </div>
             </div>
