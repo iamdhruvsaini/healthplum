@@ -11,7 +11,7 @@ import AppointmentBooking from '../pages/appointment/AppointmentBooking';
 import SignupPage from '../pages/signup/SignUpPage';
 import Appointment from '../pages/appointment/Appointment';
 import { PatientProfile } from '../pages/profile/PatientProfile';
-import { DoctorProfile } from '../pages/profile/DocotorProfile';
+
 import PrivateRoute from './PrivateRoute';
 import ParkinsonsForm from '../pages/prediction/Parkinson';
 import Heart from '../pages/prediction/Heart';
@@ -20,6 +20,7 @@ import CaloriePrediction from '../pages/prediction/Calories';
 import InsurancePricePrediction from '../pages/prediction/Insurance';
 import DoctorDashboard from '../pages/doctors/DoctorDashboard';
 import Diabetes from '../pages/prediction/Diabetes';
+import DoctorProfile from '../pages/profile/DoctorProfile';
 
 
 
