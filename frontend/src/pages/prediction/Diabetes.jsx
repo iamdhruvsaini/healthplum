@@ -156,8 +156,8 @@ const Diabetes = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-indigo-50 py-8 ">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen indigo-50 py-8 ">
+      <div className="max-w-6xl mx-auto">
         {currentSection === "form" ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             {/* Header */}

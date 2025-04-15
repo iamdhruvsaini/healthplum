@@ -19,6 +19,7 @@ import BreastCancer from '../pages/prediction/BreastCancer';
 import CaloriePrediction from '../pages/prediction/Calories';
 import InsurancePricePrediction from '../pages/prediction/Insurance';
 import DoctorDashboard from '../pages/doctors/DoctorDashboard';
+import Diabetes from '../pages/prediction/Diabetes';
 
 
 
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
         path:'/insurance-prediction',
         element:<PrivateRoute><InsurancePricePrediction/></PrivateRoute>
       },
+      {
+        path:'/diabetes-prediction',
+        element:<PrivateRoute><Diabetes/></PrivateRoute>
+      }
     ]
   },
   {

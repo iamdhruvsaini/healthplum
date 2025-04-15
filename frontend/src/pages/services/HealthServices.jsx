@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Stethoscope, Ambulance, Brain, Heart, Activity, ArrowRight, Calendar, Clipboard } from 'lucide-react';
+import { Stethoscope, Ambulance, Brain, Heart, Activity, ArrowRight, Calendar, Clipboard, ActivitySquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function HealthServices() {
@@ -66,6 +66,18 @@ export default function HealthServices() {
       buttonColor: 'text-yellow-600',
       buttonHoverColor: 'hover:text-yellow-800',
       link: '/insurance-prediction'
+    },
+    {
+      id: 'diabetes-prediction',
+      name: 'Diabetes Prediction',
+      description: 'Predict the likelihood of diabetes based on medical inputs',
+      icon: <ActivitySquare size={24} />,
+      bgColor: 'bg-pink-50',
+      iconBgColor: 'bg-pink-100',
+      iconColor: 'text-pink-600',
+      buttonColor: 'text-pink-600',
+      buttonHoverColor: 'hover:text-pink-800',
+      link: '/diabetes-prediction'
     }
   ];
   
