@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", response.data.token);
       setCurrentUser(response.data.user); // user is expected to be returned from backend
     }
-    console.log(response);
     return response;
   };
 

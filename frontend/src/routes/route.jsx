@@ -21,6 +21,7 @@ import InsurancePricePrediction from '../pages/prediction/Insurance';
 import DoctorDashboard from '../pages/doctors/DoctorDashboard';
 import Diabetes from '../pages/prediction/Diabetes';
 import DoctorProfile from '../pages/profile/DoctorProfile';
+import UnderDevelopment from '../components/UnderDevelopment';
 
 
 
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
   {
     path:'/doctor-portal',
     element:<DoctorDashboard/>,
+  },
+  {
+    path:'*',
+    element:<UnderDevelopment/>
   }
 ]);
 
